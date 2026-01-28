@@ -11,128 +11,111 @@
       padding: 0;
       text-align: center;
     }
-    header {
-      padding: 30px;
-    }
+    header { padding: 30px; }
     .hero-img {
       max-width: 260px;
       border-radius: 20px;
-      animation: wiggle 1.2s infinite ease-in-out;
+      animation: wiggle 1.2s infinite ease-in-out, floaty 3s infinite ease-in-out;
     }
-    @keyframes wiggle {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(3deg); }
-      50% { transform: rotate(0deg); }
-      75% { transform: rotate(-3deg); }
-      100% { transform: rotate(0deg); }
-    }
-    h1 {
-      font-size: 48px;
-      color: #2b8c2b;
-      text-shadow: 2px 2px #ffdd66;
-      animation: pop 1s infinite alternate;
-    }
-    @keyframes pop {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
-    }
-    h2 {
-      font-size: 28px;
-      color: #444;
-    }
-    .section {
-      margin-top: 40px;
-      padding: 20px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 15px 25px;
-      margin-top: 15px;
-      background: #2b8c2b;
-      color: white;
-      border-radius: 12px;
-      text-decoration: none;
-      font-size: 20px;
-    }
-    .degen-box {
-      background: #fff1c4;
-      border: 3px dashed #ff9900;
-      margin: 30px;
-      padding: 20px;
-      border-radius: 15px;
-    }
-    footer {
-      margin-top: 50px;
-      padding: 20px;
-      font-size: 14px;
-      color: #777;
-    }
-    .tokenomics-table {
-      margin: 0 auto;
-      border-collapse: collapse;
-    }
-    .tokenomics-table td {
-      border: 2px solid #ffb732;
-      padding: 10px 20px;
-      background: #fffbe0;
-      font-size: 20px;
-    }
+    @keyframes wiggle { 0%{transform:rotate(0deg);}25%{transform:rotate(3deg);}50%{transform:rotate(0);}75%{transform:rotate(-3deg);}100%{transform:rotate(0);} }
+    @keyframes floaty { 0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);} }
+    @keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);} }h1 {
+  font-size: 48px;
+  color: #2b8c2b;
+  text-shadow: 2px 2px #ffdd66;
+}
+h2 { font-size: 28px; color: #444; }
+.section { margin-top: 40px; padding: 20px; }
+.btn {
+  display: inline-block;
+  padding: 15px 25px;
+  margin-top: 15px;
+  background: #2b8c2b;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 20px;
+}
+.degen-box {
+  background: #fff1c4;
+  border: 3px dashed #ff9900;
+  margin: 30px;
+  padding: 20px;
+  border-radius: 15px;
+}
+footer { margin-top: 50px; padding: 20px; font-size: 14px; color: #777; }
+
+.tokenomics-table { margin: 0 auto; border-collapse: collapse; }
+.tokenomics-table td {
+  border: 2px solid #ffb732;
+  padding: 10px 20px;
+  background: #fffbe0;
+  font-size: 20px;
+}
+
   </style>
 </head>
 <body>
   <header>
     <img src="melon-musk.png" alt="Melon Musk Mascot" class="hero-img" />
     <h1>Melon Musk</h1>
-    <h2>The Cutest Degenerate Fruit on the Blockchain 🍈🚀</h2><a href="https://x.com/MelonMuskonpump" class="btn">TWITTER / X</a>
+    <h2>The Cutest Degenerate Fruit on the Blockchain 🍈🚀</h2><a href="https://x.com/MelonMuskonpump" class="btn" target="_blank">TWITTER / X</a>
 <a href="#buy" class="btn">BUY $MUSK</a>
 
-  </header>  <h2 id="livePrice" style="font-size:32px;color:#2b8c2b;text-shadow:1px 1px #ffdd66;animation:pulse 1.5s infinite;">Loading price...</h2>  <script>
+  </header>  <!-- LIVE PRICE -->  <h2 id="livePrice" style="font-size:32px;color:#2b8c2b;text-shadow:1px 1px #ffdd66;animation:pulse 1.5s infinite;">Loading price...</h2>  <script>
     async function fetchPrice(){
       try {
-        const res = await fetch('https://frontend-api.pump.fun/coins/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump');
+        const res = await fetch("https://cache.pump.fun/coins/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump");
         const data = await res.json();
-        const price = data.usdMarketCap ? (data.usdMarketCap / data.supply).toFixed(8) : '—';
-        document.getElementById('livePrice').innerText = '$MUSK Price: $' + price;
-      } catch(e){ document.getElementById('livePrice').innerText='Price unavailable'; }
+        const price = data.priceUsd ? data.priceUsd.toFixed(8) : "—";
+        document.getElementById("livePrice").innerText = "$MUSK Price: $" + price;
+      } catch(e){
+        document.getElementById("livePrice").innerText = "Price unavailable";
+      }
     }
     fetchPrice();
     setInterval(fetchPrice, 8000);
-  </script>  <style>
-    @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.08);} 100%{transform:scale(1);} }
-    @keyframes floaty { 0%{transform:translateY(0);} 50%{transform:translateY(-10px);} 100%{transform:translateY(0);} }
-    .hero-img{animation:wiggle 1.2s infinite ease-in-out, floaty 3s infinite ease-in-out;}
-  </style>  <div class="section degen-box">
+  </script>  <!-- ABOUT -->  <div class="section degen-box">
     <h2>What is $MUSK?</h2>
-    <p>It's Elon. It's a Melon. It's destiny. Drawn in crayons. Fueled by degeneracy. Backed by absolutely nothing except VIBES.</p>
-    <p>🍈 Zero utility<br>🍈 Zero roadmap<br>🍈 Zero expectations<br>🍈 100% Vitamin C & Chaos</p>
-  </div>  <div class="section">
+    <p>It's Elon. It's a Melon. It's destiny. A crayon-born水果神 creating chaos on-chain.</p>
+    <p>🍈 Zero utility — 🍈 Zero promises — 🍈 100% Melon Energy</p>
+  </div>  <!-- HOW TO BUY -->  <div class="section">
     <h2>How to Buy $MUSK</h2>
-    <p>1. Open pump.fun<br>
+    <p>1. Open Pump.fun<br>
        2. Search <b>$MUSK</b><br>
-       3. Buy it<br>
-       4. Tell no one (or everyone)</p>
-  </div>  <div class="section degen-box">
+       3. Buy<br>
+       4. Become fruit billionaire 🍈</p>
+  </div>  <!-- TOKENOMICS -->  <div class="section degen-box">
     <h2>Tokenomics</h2>
     <table class="tokenomics-table">
       <tr><td>Total Supply</td><td>1,000,000,000</td></tr>
       <tr><td>Liquidity</td><td>Sent to Melon Heaven 🍈</td></tr>
-      <tr><td>Team</td><td>0% (we are poor)</td></tr>
-      <tr><td>Utility</td><td>LMAO no</td></tr>
+      <tr><td>Team</td><td>0%</td></tr>
+      <tr><td>Utility</td><td>lol no</td></tr>
     </table>
-  </div>  <div class="section">
-    <h2>Roadmap (Completely Fake)</h2>
-    <p>🍈 Phase 1: Launch website<br>
-       🍈 Phase 2: Go viral accidentally<br>
-       🍈 Phase 3: Elon acknowledges the melon<br>
-       🍈 Phase 4: Melon on Mars</p>
-  </div>  <div class="section degen-box" id="buy">
+  </div>  <!-- ROADMAP -->  <div class="section">
+    <h2>Roadmap (Fake)</h2>
+    <p>🍈 Phase 1: Crayon drawing<br>
+       🍈 Phase 2: Website<br>
+       🍈 Phase 3: Pump<br>
+       🍈 Phase 4: Elon acknowledges melon<br>
+       🍈 Phase 5: Mars Melon Farm</p>
+  </div>  <!-- BUY + CHART -->  <div class="section degen-box" id="buy">
     <h2>Buy $MUSK</h2>
-    <p><b>Contract:</b><br> CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump<br><br>
-<a class="btn" href="https://pump.fun/coin/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump" target="_blank">BUY ON PUMP.FUN</a><br><br>
+    <p><b>Contract:</b><br>
+    CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump</p><a class="btn" href="https://pump.fun/coin/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump" target="_blank">BUY ON PUMP.FUN</a>
 
-<iframe src="https://pump.fun/embed/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump" width="100%" height="500" style="border:0;border-radius:12px;"></iframe></p>
+<br><br>
+
+<iframe
+  src="https://pump.fun/embedded/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump"
+  width="100%"
+  height="550"
+  style="border:0;border-radius:12px;">
+</iframe>
+
   </div>  <footer>
-    <p>© 2026 Melon Musk. A fruit-based financial revolution.</p>
+    <p>© 2026 Melon Musk — Fruit-Based Financial Revolution 🍈</p>
   </footer>
 </body>
 </html>
