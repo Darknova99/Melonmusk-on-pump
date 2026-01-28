@@ -86,7 +86,22 @@
     <h2>The Cutest Degenerate Fruit on the Blockchain 🍈🚀</h2><a href="https://x.com/MelonMuskonpump" class="btn">TWITTER / X</a>
 <a href="#buy" class="btn">BUY $MUSK</a>
 
-  </header>  <div class="section degen-box">
+  </header>  <h2 id="livePrice" style="font-size:32px;color:#2b8c2b;text-shadow:1px 1px #ffdd66;animation:pulse 1.5s infinite;">Loading price...</h2>  <script>
+    async function fetchPrice(){
+      try {
+        const res = await fetch('https://frontend-api.pump.fun/coins/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump');
+        const data = await res.json();
+        const price = data.usdMarketCap ? (data.usdMarketCap / data.supply).toFixed(8) : '—';
+        document.getElementById('livePrice').innerText = '$MUSK Price: $' + price;
+      } catch(e){ document.getElementById('livePrice').innerText='Price unavailable'; }
+    }
+    fetchPrice();
+    setInterval(fetchPrice, 8000);
+  </script>  <style>
+    @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.08);} 100%{transform:scale(1);} }
+    @keyframes floaty { 0%{transform:translateY(0);} 50%{transform:translateY(-10px);} 100%{transform:translateY(0);} }
+    .hero-img{animation:wiggle 1.2s infinite ease-in-out, floaty 3s infinite ease-in-out;}
+  </style>  <div class="section degen-box">
     <h2>What is $MUSK?</h2>
     <p>It's Elon. It's a Melon. It's destiny. Drawn in crayons. Fueled by degeneracy. Backed by absolutely nothing except VIBES.</p>
     <p>🍈 Zero utility<br>🍈 Zero roadmap<br>🍈 Zero expectations<br>🍈 100% Vitamin C & Chaos</p>
@@ -112,7 +127,10 @@
        🍈 Phase 4: Melon on Mars</p>
   </div>  <div class="section degen-box" id="buy">
     <h2>Buy $MUSK</h2>
-    <p>Launching soon on Pump.fun</p>
+    <p><b>Contract:</b><br> CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump<br><br>
+<a class="btn" href="https://pump.fun/coin/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump" target="_blank">BUY ON PUMP.FUN</a><br><br>
+
+<iframe src="https://pump.fun/embed/CXLR3poMUMjmgmUUt9KgDNdREw1dQtapP1VkTMi2pump" width="100%" height="500" style="border:0;border-radius:12px;"></iframe></p>
   </div>  <footer>
     <p>© 2026 Melon Musk. A fruit-based financial revolution.</p>
   </footer>
